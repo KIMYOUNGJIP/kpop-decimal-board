@@ -481,6 +481,70 @@ button:focus-visible {
   z-index: 6 !important;
 }
 
+/* 아이돌 축하 점프 & 꽃가루 파티클 */
+@keyframes idolCheer {
+  0% { transform: scale(1) translateY(0) rotate(0deg); }
+  25% { transform: scale(1.14) translateY(-14px) rotate(-5deg); }
+  50% { transform: scale(1.12) translateY(-4px) rotate(5deg); }
+  75% { transform: scale(1.16) translateY(-12px) rotate(-3deg); }
+  100% { transform: scale(1) translateY(0) rotate(0deg); }
+}
+
+.celebrate-jump {
+  animation: idolCheer .75s cubic-bezier(.2, 1.4, .4, 1) 2;
+  box-shadow: 0 0 0 6px rgba(255, 197, 49, .65), 0 12px 28px rgba(255, 92, 141, .4) !important;
+}
+
+.confetti-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 80;
+}
+
+.confetti-piece {
+  position: fixed;
+  top: -16px;
+  width: 12px;
+  height: 16px;
+  border-radius: 3px;
+  animation: confettiFall 1.5s cubic-bezier(.2, .6, .4, 1) forwards;
+}
+
+@keyframes confettiFall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(540deg); opacity: 0; }
+}
+
+.celebrate-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  background: linear-gradient(135deg, #FFF7E6, #FFE4F1);
+  border: 3px solid var(--hwang);
+  border-radius: 20px;
+  padding: 16px;
+}
+
+.celebrate-hero img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 5px solid #fff;
+  box-shadow: 0 8px 22px rgba(255, 92, 141, .32);
+  object-fit: cover;
+  animation: idolCheer .8s ease-in-out infinite;
+}
+
+.stars-row {
+  font-size: 2rem;
+  letter-spacing: 6px;
+  animation: pop .5s cubic-bezier(.2, 1.5, .4, 1);
+}
+
 .station-card {
   position: relative;
   background: #fff;

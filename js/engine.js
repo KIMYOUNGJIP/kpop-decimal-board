@@ -440,6 +440,7 @@
           let bonusMsg = "";
           if (isOk) {
             AUDIO.correct();
+            cheerIdol();
             const bonus = hasItem("item_lightstick") ? 20 : 0;
             state.score += 50 + bonus;
             if (bonus) bonusMsg = " (🪄 응원봉 보너스 +20점!)";
@@ -456,6 +457,34 @@
         tchoices.appendChild(btn);
       });
     }
+  }
+
+  function launchConfetti(count) {
+    const layer = document.createElement("div");
+    layer.className = "confetti-layer";
+    const colors = ["#FF5C8D", "#FFC531", "#2C7BE5", "#22A06B", "#A855F7", "#FF8A1F"];
+    for (let i = 0; i < (count || 24); i++) {
+      const p = document.createElement("div");
+      p.className = "confetti-piece";
+      p.style.left = `${Math.random() * 100}%`;
+      p.style.background = colors[i % colors.length];
+      p.style.animationDelay = `${Math.random() * 0.35}s`;
+      p.style.animationDuration = `${1.1 + Math.random() * 0.7}s`;
+      layer.appendChild(p);
+    }
+    document.body.appendChild(layer);
+    setTimeout(() => layer.remove(), 2200);
+  }
+
+  function cheerIdol() {
+    launchConfetti(22);
+    ["#tport", ".scene-cast"].forEach((sel) => {
+      const el = document.querySelector(sel);
+      if (!el) return;
+      el.classList.remove("celebrate-jump");
+      void el.offsetWidth;
+      el.classList.add("celebrate-jump");
+    });
   }
 
   function handleChapterNext() {
@@ -491,12 +520,25 @@
       state.coins += totalReward;
     }
     saveState();
-    AUDIO.reward();
+    if (AUDIO.fanfare) AUDIO.fanfare();
+    else AUDIO.reward();
+    launchConfetti(42);
     const allDone = state.cleared.length === (DATA.stations || []).length;
     openModal(allDone ? "🌟 콘서트 준비 완벽 성공!" : "🎉 구역 미션 완료!", (body) => {
+      const portraitHtml = currentStation.npcPortrait
+        ? `<img src="${currentStation.npcPortrait}" alt="${currentStation.npcName}" />`
+        : `<div style="font-size:4rem;">${currentStation.npcEmoji || "🎤"}</div>`;
       body.innerHTML = `
-        <p style="font-size:1.1rem;margin:0;"><strong>${currentStation.title}</strong>을(를) 완료했습니다!</p>
-        <p style="margin:0;">획득 코인: 🪙 +${totalReward}${ribbonBonus ? " (🎀 리본 보너스 +15)" : ""} | 현재 점수: ⭐ ${state.score}점</p>
+        <div class="celebrate-hero">
+          ${portraitHtml}
+          <div class="stars-row">⭐ ⭐ ⭐</div>
+          <div style="font-family:var(--display);font-size:1.22rem;color:var(--navy);">
+            ${currentStation.npcName}: "최고야! ${currentStation.title} 완벽하게 해결했어!"
+          </div>
+          <div style="font-weight:700;color:var(--meok);">
+            획득 코인: 🪙 +${totalReward}${ribbonBonus ? " (🎀 리본 보너스 +15)" : ""} · 누적 점수: ⭐ ${state.score}점
+          </div>
+        </div>
         ${allDone ? '<div class="feedback-box ok">🎊 6개 구역을 모두 완료해 K-POP 앵콜 무대가 열렸습니다!</div>' : ""}
       `;
       const btn = document.createElement("button");
