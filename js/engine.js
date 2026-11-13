@@ -373,6 +373,8 @@
 
       typeText(ttext, `🎮 ${currentStation.minigame.title} — ${currentStation.minigame.instruction}`);
       MINIGAMES.render(currentStation.minigame, mgStage, (mgScore) => {
+        AUDIO.reward();
+        cheerIdol();
         state.score += Math.round(mgScore / 2);
         saveState();
         currentStep = "quiz";

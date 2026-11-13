@@ -54,13 +54,20 @@
     osc.stop(startAt + duration);
   }
 
+  const HARMONY = [
+    329.63, 392.0, 329.63, 392.0, 392.0, 493.88, 392.0, 493.88,
+    349.23, 440.0, 349.23, 440.0, 392.0, 493.88, 392.0, 493.88
+  ];
+
   function startBGM() {
     if (bgmTimer || muted) return;
     bgmTimer = setInterval(() => {
       if (muted || !ctx || ctx.state !== "running") return;
       const mel = MELODY[bgmStep % MELODY.length];
+      const har = HARMONY[bgmStep % HARMONY.length];
       const bas = BASS[bgmStep % BASS.length];
       if (mel) playTone(mel, 0.18, "triangle", 0.032, 0);
+      if (har) playTone(har, 0.16, "sine", 0.018, 0);
       if (bas) playTone(bas, 0.22, "sine", 0.028, 0);
       bgmStep++;
     }, 240);
