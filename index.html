@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>K-POP 콘서트 준비 대작전: 소수의 곱셈</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script defer src="data/game-data.js"></script>
+  <script defer src="js/audio.js"></script>
+  <script defer src="js/minigames.js"></script>
+  <script defer src="js/engine.js"></script>
+</head>
+<body>
+  <!-- 1. 시작 화면 -->
+  <section id="title-screen">
+    <div class="title-header">
+      <div class="title-chip">5학년 4단원 소수의 곱셈 · 복습 대작전</div>
+      <h1 id="title-main" class="title-main">K-POP 콘서트 준비 대작전!</h1>
+      <p id="title-sub" class="title-sub">오아·리사·지수·아윤과 함께 무대 준비를 완성하고 앵콜 무대를 열어 보자!</p>
+    </div>
+    <div id="title-art" class="title-art"></div>
+    <div class="title-actions">
+      <button id="btn-start-new" class="btn" type="button">🎤 새로 시작</button>
+      <button id="btn-start-cont" class="btn blue hidden" type="button">▶ 이어하기</button>
+    </div>
+  </section>
+
+  <!-- 2. 보드 투어 맵 화면 -->
+  <section id="board-screen" class="hidden">
+    <header class="top-hud">
+      <div class="hud-group">
+        <span id="hud-title" class="hud-badge-pill">🎤 K-POP 콘서트</span>
+        <span id="hud-progress" class="hud-badge-pill">🚩 완료 0 / 6</span>
+        <span id="hud-coins" class="hud-badge-pill">🪙 50</span>
+        <span id="hud-score" class="hud-badge-pill">⭐ 0점</span>
+      </div>
+      <div class="hud-group">
+        <button id="btn-codex" class="pillbtn" type="button">📖 도감</button>
+        <button id="btn-shop" class="pillbtn" type="button">🛒 상점</button>
+        <button id="btn-report" class="pillbtn" type="button">📊 리포트</button>
+        <button id="btn-sound" class="roundbtn" type="button" aria-label="소리 켜기/끄기">🔊</button>
+      </div>
+    </header>
+
+    <main class="board-stage">
+      <div class="board-banner">
+        <div id="board-status" class="board-banner-text">🗺️ 1구역부터 6구역까지 단계별로 돌파해 콘서트를 완성하세요!</div>
+        <button id="btn-roll-dice" class="btn pink" type="button">🚀 다음 구역 도전하기 (Space)</button>
+      </div>
+      <div id="board-grid" class="board-grid"></div>
+    </main>
+  </section>
+
+  <!-- 3. 장(거점) 플레이 화면 -->
+  <section id="chapter-screen" class="hidden">
+    <div id="tbg"></div>
+    <header class="chead">
+      <div class="ctitle">
+        <span id="cno">1구역</span>
+        <h2 id="cname">대기실 &amp; 입장 동선</h2>
+      </div>
+      <div id="steps" aria-label="진행 단계">
+        <span data-step="story" class="on">이야기</span>
+        <span data-step="game">게임</span>
+        <span data-step="quiz">문제</span>
+      </div>
+      <button id="btn-back-board" class="pillbtn" type="button">🗺️ 보드판</button>
+      <button id="btn-sound-ch" class="roundbtn" type="button" aria-label="소리 켜기/끄기">🔊</button>
+    </header>
+
+    <div class="cbody">
+      <div id="tfig">
+        <div id="scene-frame" class="frame">
+          <div id="scene-art"></div>
+          <div id="tcard" class="hidden"></div>
+        </div>
+        <div id="minigame-stage" class="hidden"></div>
+      </div>
+
+      <div class="tline">
+        <div id="tport" class="portw"></div>
+        <div id="tbox">
+          <div id="tname">오아 &amp; 리사</div>
+          <p id="ttext"></p>
+          <div id="tchoices"></div>
+          <div id="tfeedback" class="feedback-pill hidden"></div>
+        </div>
+      </div>
+
+      <div class="tnav">
+        <button id="btn-ch-prev" class="btn ghost hidden" type="button">◀ 이전</button>
+        <button id="btn-ch-next" class="btn" type="button">다음 ▶ (Space)</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. 범용 모달 (도감 / 상점 / 성취도 리포트) -->
+  <div id="modal-backdrop" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="modal-title" style="font-size:1.3rem;">제목</h2>
+        <button id="modal-close" class="pillbtn" type="button" aria-label="닫기">✕ 닫기</button>
+      </div>
+      <div id="modal-body" class="modal-body"></div>
+    </div>
+  </div>
+</body>
+</html>
